@@ -21,4 +21,4 @@ email.send_keys(expressvpn_user)
 password.send_keys(keyring.get_password("expressvpn", expressvpn_user)
 print('Logging In....')
 browser.find_element_by_name('commit').click()
-browser.quit()
+

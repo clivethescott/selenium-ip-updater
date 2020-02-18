@@ -74,5 +74,6 @@ if __name__ == "__main__":
     dynu(browser, ip)
     time.sleep(3)
     expressvpn(browser, ip)
+    browser.quit()
 else:
     print('Run as script!')

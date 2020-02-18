@@ -12,8 +12,8 @@ from selenium.webdriver.support import expected_conditions as ec
 def dynu(browser, ip):
 
     print('Updating Dynu....')
-    dynu_url = \
-        'https://www.dynu.com/ControlPanel/Login?ReturnUrl=%2fen-US%2fControlPanel'
+    dynu_url = 'https://www.dynu.com/ControlPanel/Login' \
+        '?ReturnUrl=%2fen-US%2fControlPanel'
     browser.get(dynu_url)
     condition = ec.presence_of_element_located((By.ID, "Username"))
     username = WebDriverWait(browser, 10).until(condition)
@@ -72,6 +72,9 @@ if __name__ == "__main__":
     chrome_options = webdriver.ChromeOptions()
     # Use previously set data to prevent 2 factor auth
     chrome_options.add_argument("user-data-dir=login-data")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-extensions")
     browser = webdriver.Chrome(driver_path, chrome_options=chrome_options)
     ip = requests.get('https://api.ipify.org').text
     dynu(browser, ip)

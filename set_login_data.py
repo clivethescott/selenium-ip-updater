@@ -1,5 +1,6 @@
 import os
 
+import keyring
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -15,8 +16,9 @@ browser.get(expressvpn_url)
 condition = ec.presence_of_element_located((By.ID, "email"))
 email = WebDriverWait(browser, 10).until(condition)
 password = browser.find_element_by_id('password')
-email.send_keys(os.environ.get('EXPRESSVPN_EMAIL'))
-password.send_keys(os.environ.get('EXPRESSVPN_PASSWORD'))
+expressvpn_user = os.environ.get('EXPRESSVPN_EMAIL')
+email.send_keys(expressvpn_user)
+password.send_keys(keyring.get_password("expressvpn", expressvpn_user)
 print('Logging In....')
 browser.find_element_by_name('commit').click()
 

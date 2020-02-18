@@ -2,6 +2,7 @@ import os
 import time
 
 import requests
+import keyring
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -16,9 +17,10 @@ def dynu(browser, ip):
     browser.get(dynu_url)
     condition = ec.presence_of_element_located((By.ID, "Username"))
     username = WebDriverWait(browser, 10).until(condition)
-    username.send_keys(os.environ.get('DYNU_USER'))
+    dynu_user = os.environ.get('DYNU_USER')
+    username.send_keys(dynu_user)
     password = browser.find_element_by_id('Password')
-    password.send_keys(os.environ.get('DYNU_PASSWORD'))
+    password.send_keys(keyring.get_password("dynu", dynu_user))
     print('Logging into to Dynu...')
     browser.find_element_by_name('SubmitButton').click()
     condition = ec.presence_of_element_located(
@@ -46,8 +48,9 @@ def expressvpn(browser, ip):
     condition = ec.presence_of_element_located((By.ID, "email"))
     email = WebDriverWait(browser, 10).until(condition)
     password = browser.find_element_by_id('password')
-    email.send_keys(os.environ.get('EXPRESSVPN_EMAIL'))
-    password.send_keys(os.environ.get('EXPRESSVPN_PASSWORD'))
+    expressvpn_user = os.environ.get('EXPRESSVPN_EMAIL')
+    email.send_keys(expressvpn_user)
+    password.send_keys(keyring.get_password("expressvpn", expressvpn_user))
     print('Logging In....')
     browser.find_element_by_name('commit').click()
     condition = ec.presence_of_element_located((By.CLASS_NAME, "container"))

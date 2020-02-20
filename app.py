@@ -59,7 +59,7 @@ def expressvpn(browser, ip):
     browser.get('https://www.expressvpn.com/dns_settings')
     condition = ec.presence_of_element_located((By.ID, "ip-button"))
     ip_button = WebDriverWait(browser, 10).until(condition)
-    if not ip_button.is_enabled():
+    if ip_button.is_enabled():
         print('Updating DNS setting')
         ip_button.click()
         print('Express VPN IP registered!')

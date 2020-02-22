@@ -57,14 +57,16 @@ def expressvpn(browser, ip):
     WebDriverWait(browser, 10).until(condition)
     print('Going to DNS settings')
     browser.get('https://www.expressvpn.com/dns_settings')
-    condition = ec.presence_of_element_located((By.ID, "ip-button"))
-    ip_button = WebDriverWait(browser, 10).until(condition)
+    ip_button_visible = ec.presence_of_element_located((By.ID, "ip-button"))
+    ip_button = WebDriverWait(browser, 10).until(ip_button_visible)
     is_ip_registered = 'disabled' in ip_button.get_attribute('class')
     if is_ip_registered:
         print('No need to update Express VPN, IP registered')
     else:
         print('Updating DNS setting')
         ip_button.click()
+        print('Applying changes....')
+        WebDriverWait(browser, 10).until(ip_button_visible)
         print('Express VPN IP registered!')
 
 
@@ -79,8 +81,9 @@ if __name__ == "__main__":
     browser = webdriver.Chrome(driver_path, chrome_options=chrome_options)
     ip = requests.get('https://api.ipify.org').text
     dynu(browser, ip)
-    time.sleep(3)
+    time.sleep(2)
     expressvpn(browser, ip)
+    time.sleep(2)
     browser.quit()
 else:
     print('Run as script!')

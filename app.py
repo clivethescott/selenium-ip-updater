@@ -65,9 +65,6 @@ def expressvpn(browser, ip):
     else:
         print('Updating DNS setting')
         ip_button.click()
-        print('Applying changes....')
-        WebDriverWait(browser, 10).until(ip_button_visible)
-        print('Express VPN IP registered!')
 
 
 if __name__ == "__main__":
@@ -83,7 +80,9 @@ if __name__ == "__main__":
     dynu(browser, ip)
     time.sleep(2)
     expressvpn(browser, ip)
-    time.sleep(2)
+    time.sleep(5)
+    print('Express VPN IP registered!')
+
     browser.quit()
 else:
     print('Run as script!')
